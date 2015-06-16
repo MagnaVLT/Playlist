@@ -217,7 +217,6 @@ void DATPlayListFilter::refreash_feature()
 
 void DATPlayListFilter::refreash_vin()
 {
-	this->refreash_feature();
 }
 
 void DATPlayListFilter::refeash_level_2()
