@@ -25,7 +25,9 @@
 #include "Queries.h"
 #include "UI/ListHandle.h"
 #include "Utils/Utilities.h"
-
+#include <QtCore/QDate>
+#include <QtGui/QApplication>
+#include <QtGui/QProgressDialog>
 
 class DATPlayListFilter : public QObject, public cBaseQtFilter
 {
@@ -121,26 +123,91 @@ protected:
 private:
 	Queries *queries;
 
+	vector<string> event_categories;
+	vector<string> date_ranges;
+
+	vector<string> projects;
+	vector<string> features;
+	vector<string> vins;
+
+	vector<string> events;
+	vector<string> annotations;
+	vector<string> additional_informations;
+
+	vector<string> days;
+	vector<string> weathers;
+	vector<string> roads;
+	vector<string> event_statuses;
+	
+
+	ListHandle* listhandle;
+	QStandardItemModel* project_model;
+	QStandardItemModel* selected_project_model;
+
+	QStandardItemModel* vin_model;
+	QStandardItemModel* selected_vin_model;
+
+	QStandardItemModel* feature_model;
+	QStandardItemModel* selected_feature_model;
+
+	QStandardItemModel* day_type_model;
+	QStandardItemModel* selected_day_type_model;
+
+	QStandardItemModel* weather_type_model;
+	QStandardItemModel* selected_weather_type_model;
+
+	QStandardItemModel* road_type_model;
+	QStandardItemModel* selected_road_type_model;
+
+	QStandardItemModel* event_model;
+	QStandardItemModel* selected_event_model;
+
+	QStandardItemModel* annotation_model;
+	QStandardItemModel* selected_annotation_model;
+
+	QStandardItemModel* additional_information_model;
+	QStandardItemModel* selected_additional_information_model;
+
+	QStandardItemModel* event_status_model;
+	QStandardItemModel* selected_event_status_model;
+	QStandardItemModel* clip_list_model;
+
+
 	void register_signal_slot();
 	void register_signal_slot_for_log_in();
 	void initAll();
 	void initAllModel();
-	void init_project_list();
-	void init_vin_list();
-	void init_feature_list();
-	void init_day_type_list();
-	void init_weather_type_list();
-	void init_road_type_list();
-	void init_event_list();
-	void init_predefined_annotation_list();
-	void init_additional_information_list();
-	void init_event_status_list();
+
+	void init_level0();
+	void init_level1();
+	void init_level2();
+	void init_level3();
+	void init_level4();
+
 	void refeash_level_1();
+	void refreash_feature();
+	void refreash_vin();
+
 	void refeash_level_2();
+	void refreash_event();
+	void refreash_annotation();
+	void refreash_additional_information();
+
 	void refeash_level_3();
+	void refreash_day();
+	void refreash_weather();
+	void refreash_road();
+	void refreash_event_status();
+
 	void refeash_level_4();
+	void refreash_clip_list();
+
 	void to_log_in_mode(bool mode);
 	bool checkAuth(string id, string pass);
+	void init_project_list();
+
+	string get_date(QDateEdit* edit, string comp);
+	void set_data();
 
 public slots:
 	tResult on_btn_login_clicked();
@@ -156,6 +223,27 @@ public slots:
 	tResult on_btn_change_pw_clicked();
 	tResult on_btn_change_cancel_clicked();
 	tResult on_btn_change_clicked();
+	tResult project_select();
+	tResult project_deselect();
+	tResult feature_select();
+	tResult feature_deselect();
+	tResult vin_select();
+	tResult vin_deselect();
+
+	tResult day_type_select();
+	tResult day_type_deselect();
+	tResult weather_type_select();
+	tResult weather_type_deselect();
+	tResult road_type_select();
+	tResult road_type_deselect();
+	tResult event_status_select();
+	tResult event_status_deselect();
+	tResult event_select();
+	tResult event_deselect();
+	tResult annotation_select();
+	tResult annotation_deselect();
+	tResult ai_select();
+	tResult ai_deselect();
 };
 
 #endif

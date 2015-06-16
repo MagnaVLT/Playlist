@@ -94,8 +94,6 @@ tResult DATPlayListFilter::Run(tInt nActivationCode, const tVoid* pvUserData, tI
 
 
 
-
-
 tHandle DATPlayListFilter::CreateView()
 {
 	m_pFilterWidget = new QWidget();
@@ -107,6 +105,214 @@ tHandle DATPlayListFilter::CreateView()
 
 	return (tHandle)m_pFilterWidget;
 }
+
+void DATPlayListFilter::initAll()
+{
+	this->register_signal_slot();
+	this->initAllModel();
+	
+}
+
+void DATPlayListFilter::initAllModel()
+{
+	this->init_level0();
+	this->init_level1();
+	this->init_level2();
+	this->init_level3();
+	this->init_level4();
+}
+void DATPlayListFilter::init_level0()
+{
+	this->m_oFilterGUI.chk_fcm_event->setChecked(false);
+	this->m_oFilterGUI.chk_eyeq_event->setChecked(false);
+	this->m_oFilterGUI.chk_user_event->setChecked(false);
+	this->m_oFilterGUI.chk_radar->setChecked(false);
+	this->m_oFilterGUI.chk_date->setChecked(true);
+}
+
+void DATPlayListFilter::init_level1()
+{
+	project_model = new QStandardItemModel();
+	selected_project_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_project->setModel(this->project_model);
+	this->m_oFilterGUI.list_selected_project->setModel(this->selected_project_model);
+	feature_model = new QStandardItemModel();
+	selected_feature_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_feature->setModel(this->feature_model);
+	this->m_oFilterGUI.list_selected_feature->setModel(this->selected_feature_model);
+
+	vin_model = new QStandardItemModel();
+	selected_vin_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_vin->setModel(this->vin_model);
+	this->m_oFilterGUI.list_selected_vin->setModel(this->selected_vin_model);
+
+	init_project_list();
+
+}
+
+void DATPlayListFilter::init_level2()
+{
+	event_model = new QStandardItemModel();
+	selected_event_model = new QStandardItemModel();
+	
+	this->m_oFilterGUI.list_event->setModel(this->event_model);
+	this->m_oFilterGUI.list_selected_event->setModel(this->selected_event_model);
+	
+	annotation_model = new QStandardItemModel();
+	selected_annotation_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_annotation->setModel(this->annotation_model);
+	this->m_oFilterGUI.list_selected_annotation->setModel(this->selected_annotation_model);
+
+
+}
+
+void DATPlayListFilter::init_level3()
+{
+	day_type_model = new QStandardItemModel();
+	selected_day_type_model = new QStandardItemModel();
+	weather_type_model = new QStandardItemModel();
+	selected_weather_type_model = new QStandardItemModel();
+	road_type_model = new QStandardItemModel();
+	selected_road_type_model = new QStandardItemModel();
+	event_status_model = new QStandardItemModel();
+	selected_event_status_model = new QStandardItemModel();
+
+	this->m_oFilterGUI.list_day->setModel(this->day_type_model);
+	this->m_oFilterGUI.list_selected_day->setModel(this->selected_day_type_model);
+	this->m_oFilterGUI.list_weather->setModel(this->weather_type_model);
+	this->m_oFilterGUI.list_selected_weather->setModel(this->selected_weather_type_model);
+	this->m_oFilterGUI.list_road->setModel(this->road_type_model);
+	this->m_oFilterGUI.list_selected_road->setModel(this->selected_road_type_model);
+	this->m_oFilterGUI.list_event_status->setModel(this->event_status_model);
+	this->m_oFilterGUI.list_selected_event_status->setModel(this->selected_event_status_model);
+
+}
+
+
+void DATPlayListFilter::init_level4()
+{
+	clip_list_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_clip_list->setModel(this->clip_list_model);
+}
+
+void DATPlayListFilter::init_project_list()
+{
+	this->selected_project_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_selected_project->setModel(this->selected_project_model);
+	string query =	queries->get_project_list(ID);
+	project_model = new QStandardItemModel();
+	this->listhandle->addItemsFromDB(m_oFilterGUI.list_project, project_model, queries->get_fields_name_id(), query);
+}
+
+void DATPlayListFilter::refeash_level_1()
+{
+	this->refreash_vin();
+	this->refreash_feature();
+}
+
+void DATPlayListFilter::refreash_feature()
+{
+	this->refreash_vin();
+}
+
+void DATPlayListFilter::refreash_vin()
+{
+	this->refreash_feature();
+}
+
+void DATPlayListFilter::refeash_level_2()
+{
+	this->refreash_event();
+	this->refreash_annotation();
+	this->refreash_additional_information();
+
+}
+
+void DATPlayListFilter::refreash_event()
+{
+
+}
+
+void DATPlayListFilter::refreash_annotation()
+{
+
+}
+
+void DATPlayListFilter::refreash_additional_information()
+{
+
+}
+
+void DATPlayListFilter::refeash_level_3()
+{
+	this->refreash_day();
+	this->refreash_weather();
+	this->refreash_road();
+	this->refreash_event_status();
+}
+
+
+void DATPlayListFilter::refreash_day()
+{
+
+}
+
+void DATPlayListFilter::refreash_weather()
+{
+	
+}
+
+void DATPlayListFilter::refreash_road()
+{
+
+}
+
+void DATPlayListFilter::refreash_event_status()
+{
+
+}
+
+void DATPlayListFilter::refeash_level_4()
+{
+	this->refreash_clip_list();
+}
+
+void DATPlayListFilter::refreash_clip_list(){
+
+}
+
+void DATPlayListFilter::set_data()
+{
+
+	if(this->m_oFilterGUI.chk_fcm_event->isChecked()==true) event_categories.push_back("1");
+	if(this->m_oFilterGUI.chk_eyeq_event->isChecked()==true) event_categories.push_back("2");
+	if(this->m_oFilterGUI.chk_user_event->isChecked()==true) event_categories.push_back("3");
+	if(this->m_oFilterGUI.chk_radar->isChecked()==true) event_categories.push_back("4");
+
+	if(!this->m_oFilterGUI.chk_date->isChecked())
+	{
+		date_ranges.push_back(this->get_date(this->m_oFilterGUI.dateEdit, "-"));
+		date_ranges.push_back(this->get_date(this->m_oFilterGUI.dateEdit_2, "-"));
+	}
+
+	projects = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_project, 1);
+	features = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_feature, 1);
+	vins = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_vin, 1);
+
+	events = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_event, 1);
+	annotations = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_annotation, 1);
+	additional_informations = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_ai, 1);
+
+	days = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_day, 1);
+	weathers = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_weather, 1);
+	roads = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_road, 1);
+	event_statuses = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_event_status, 1);
+
+}
+
+
+
+
 
 void DATPlayListFilter::register_signal_slot_for_log_in()
 {
@@ -166,6 +372,177 @@ tResult DATPlayListFilter::on_dateEdit_changed()
 	RETURN_NOERROR;
 }
 
+tResult DATPlayListFilter::project_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_project, this->project_model, m_oFilterGUI.list_selected_project, this->selected_project_model);
+	this->set_data();
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::project_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_project, this->selected_project_model, m_oFilterGUI.list_project, this->project_model);
+	this->set_data();
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
+
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::feature_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_feature, this->feature_model, m_oFilterGUI.list_selected_feature, this->selected_feature_model);
+	this->set_data();
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
+
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::feature_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_feature, this->selected_feature_model, m_oFilterGUI.list_feature, this->feature_model);
+	this->set_data();
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
+
+	RETURN_NOERROR;
+}
+tResult DATPlayListFilter::vin_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_vin, this->vin_model, m_oFilterGUI.list_selected_vin, this->selected_vin_model);
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::vin_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_vin, this->selected_vin_model, m_oFilterGUI.list_vin, this->vin_model);
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+
+tResult DATPlayListFilter::day_type_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_day, this->day_type_model, m_oFilterGUI.list_selected_day, this->selected_day_type_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::day_type_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_day, this->selected_day_type_model, m_oFilterGUI.list_day, this->day_type_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::weather_type_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_weather, this->weather_type_model, m_oFilterGUI.list_selected_weather, this->selected_weather_type_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::weather_type_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_weather, this->selected_weather_type_model, m_oFilterGUI.list_weather, this->weather_type_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::road_type_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_road, this->road_type_model, m_oFilterGUI.list_selected_road, this->selected_road_type_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::road_type_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_road, this->selected_road_type_model, m_oFilterGUI.list_road, this->road_type_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::event_status_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_event_status, this->event_status_model, m_oFilterGUI.list_selected_event_status, this->selected_event_status_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::event_status_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_event_status, this->selected_event_status_model, m_oFilterGUI.list_event_status, this->event_status_model);
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::event_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_event, this->event_model, m_oFilterGUI.list_selected_event, this->selected_event_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::event_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_event, this->selected_event_model, m_oFilterGUI.list_event, this->event_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::annotation_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_annotation, this->annotation_model, m_oFilterGUI.list_selected_annotation, this->selected_annotation_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::annotation_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_annotation, this->selected_annotation_model, m_oFilterGUI.list_annotation, this->annotation_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::ai_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_ai, this->additional_information_model, m_oFilterGUI.list_selected_ai, this->selected_additional_information_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::ai_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_ai, this->selected_additional_information_model, m_oFilterGUI.list_ai, this->additional_information_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
 tResult DATPlayListFilter::on_dateEdit_2_changed()
 {
 
@@ -208,7 +585,7 @@ tResult DATPlayListFilter::on_btn_change_clicked(){
 		MagnaUtil::show_message("The passwords are not matched");
 		RETURN_NOERROR;
 	}
-	string query = "update users set password = PASSWORD('"+p1+"') where id = '" + userid + "';";
+	string query = queries->get_update_password(userid, p1);
 	(new Updator(query))->execute();
 
 	this->m_oFilterGUI.grp_pwchange->setVisible(false);
@@ -244,7 +621,7 @@ bool DATPlayListFilter::checkAuth(string id, string pass)
 {
 	vector<string> field;
 	field.push_back("cnt");
-	string query = "select count(*) as cnt from users where id = '" + id + "' and password = PASSWORD('"+pass+"');";
+	string query = queries->get_login_query(id, pass);
 	map<string, vector<string>> data = (new Retriever(field, query))->getData();
 
 	int record = MagnaUtil::stringTointeger(data["cnt"].at(0));
@@ -254,6 +631,7 @@ bool DATPlayListFilter::checkAuth(string id, string pass)
 
 void DATPlayListFilter::register_signal_slot()
 {
+
 	connect(m_oFilterGUI.chk_date, SIGNAL(clicked()), this, SLOT(on_chk_date_clicked()));
 
 	connect(m_oFilterGUI.chk_eyeq_event, SIGNAL(clicked()), this, SLOT(on_chk_eyeq_event_clicked()));
@@ -267,6 +645,30 @@ void DATPlayListFilter::register_signal_slot()
 	connect(m_oFilterGUI.dateEdit, SIGNAL(dateChanged(QDate)), this, SLOT(on_dateEdit_changed()));
 	connect(m_oFilterGUI.dateEdit_2, SIGNAL(dateChanged(QDate)), this, SLOT(on_dateEdit_2_changed()));
 
+	connect(m_oFilterGUI.btn_s_project, SIGNAL(clicked()), this, SLOT(project_select()));
+	connect(m_oFilterGUI.btn_d_project, SIGNAL(clicked()), this, SLOT(project_deselect()));
+	connect(m_oFilterGUI.btn_s_feature, SIGNAL(clicked()), this, SLOT(feature_select()));
+	connect(m_oFilterGUI.btn_d_feature, SIGNAL(clicked()), this, SLOT(feature_deselect()));
+	connect(m_oFilterGUI.btn_s_vin, SIGNAL(clicked()), this, SLOT(vin_select()));
+	connect(m_oFilterGUI.btn_d_vin, SIGNAL(clicked()), this, SLOT(vin_deselect()));
+
+	connect(m_oFilterGUI.btn_s_event, SIGNAL(clicked()), this, SLOT(event_select()));
+	connect(m_oFilterGUI.btn_d_event, SIGNAL(clicked()), this, SLOT(event_deselect()));
+	connect(m_oFilterGUI.btn_s_annotation, SIGNAL(clicked()), this, SLOT(annotation_select()));
+	connect(m_oFilterGUI.btn_d_annotation, SIGNAL(clicked()), this, SLOT(annotation_deselect()));
+	connect(m_oFilterGUI.btn_s_ai, SIGNAL(clicked()), this, SLOT(ai_select()));
+	connect(m_oFilterGUI.btn_d_ai, SIGNAL(clicked()), this, SLOT(ai_deselect()));
+
+	connect(m_oFilterGUI.btn_s_daytype, SIGNAL(clicked()), this, SLOT(day_type_select()));
+	connect(m_oFilterGUI.btn_d_daytype, SIGNAL(clicked()), this, SLOT(day_type_deselect()));
+	connect(m_oFilterGUI.btn_s_weathertype, SIGNAL(clicked()), this, SLOT(weather_type_select()));
+	connect(m_oFilterGUI.btn_d_weathertype, SIGNAL(clicked()), this, SLOT(weather_type_deselect()));
+	connect(m_oFilterGUI.btn_s_roadtype, SIGNAL(clicked()), this, SLOT(road_type_select()));
+	connect(m_oFilterGUI.btn_d_roadtype, SIGNAL(clicked()), this, SLOT(road_type_deselect()));
+	connect(m_oFilterGUI.btn_s_event_status, SIGNAL(clicked()), this, SLOT(event_status_select()));
+	connect(m_oFilterGUI.btn_d_event_status, SIGNAL(clicked()), this, SLOT(event_status_deselect()));
+
+	//connect(m_oFilterGUI.btn_s_project, SIGNAL(clicked()), this, SLOT(select()));
 	//connect(m_oFilterGUI.listEventAnnotation, SIGNAL(clicked(const QModelIndex)), this, SLOT(on_list_event_annotation_clicked(QModelIndex)));
 	//connect(m_oFilterGUI.cbo_i_feature, SIGNAL(currentIndexChanged(int)), this, SLOT(on_cbo_i_feature_changed()));	
 	//connect(m_oFilterGUI.txt_m, SIGNAL(editingFinished()), this, SLOT(on_txt_m_edited()));
@@ -274,85 +676,15 @@ void DATPlayListFilter::register_signal_slot()
 	connect(m_oFilterGUI.txt_search, SIGNAL(textChanged(const QString &)), this, SLOT(on_txt_search_edited(const QString &)));
 }
 
-void DATPlayListFilter::initAll()
+
+string DATPlayListFilter::get_date(QDateEdit* edit, string comp)
 {
-
-}
-
-void DATPlayListFilter::initAllModel()
-{
-
-}
-
-void DATPlayListFilter::init_project_list()
-{
-
-}
-
-void DATPlayListFilter::init_vin_list()
-{
-
-}
-
-void DATPlayListFilter::init_feature_list()
-{
-
-}
-
-void DATPlayListFilter::init_day_type_list()
-{
-
-}
-
-void DATPlayListFilter::init_weather_type_list()
-{
-
-}
-
-void DATPlayListFilter::init_road_type_list()
-{
-
-}
-
-void DATPlayListFilter::init_event_list()
-{
-
-}
-
-void DATPlayListFilter::init_predefined_annotation_list()
-{
-
-}
-
-void DATPlayListFilter::init_additional_information_list()
-{
-
-}
-
-void DATPlayListFilter::init_event_status_list()
-{
-
-}
-
-void DATPlayListFilter::refeash_level_1()
-{
-
-}
-
-
-void DATPlayListFilter::refeash_level_2()
-{
-
-}
-
-void DATPlayListFilter::refeash_level_3()
-{
-
-}
-
-void DATPlayListFilter::refeash_level_4()
-{
-
+	string year = MagnaUtil::integerToString(edit->date().year());
+	string month = MagnaUtil::integerToString(edit->date().month());
+	if(edit->date().month()<10) month = "0" + month;
+	string day = MagnaUtil::integerToString(edit->date().day());
+	if(edit->date().day()<10) day = "0" + day;
+	return year+comp+month+comp+day;
 }
 
 void DATPlayListFilter::to_log_in_mode(bool mode)

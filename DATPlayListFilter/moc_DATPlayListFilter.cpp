@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'DATPlayListFilter.h'
 **
-** Created: Mon Jun 15 16:52:22 2015
+** Created: Tue Jun 16 03:16:31 2015
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ static const uint qt_meta_data_DATPlayListFilter[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      33,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,6 +45,26 @@ static const uint qt_meta_data_DATPlayListFilter[] = {
      282,   18,   19,   18, 0x0a,
      309,   18,   19,   18, 0x0a,
      340,   18,   19,   18, 0x0a,
+     364,   18,   19,   18, 0x0a,
+     381,   18,   19,   18, 0x0a,
+     400,   18,   19,   18, 0x0a,
+     417,   18,   19,   18, 0x0a,
+     436,   18,   19,   18, 0x0a,
+     449,   18,   19,   18, 0x0a,
+     464,   18,   19,   18, 0x0a,
+     482,   18,   19,   18, 0x0a,
+     502,   18,   19,   18, 0x0a,
+     524,   18,   19,   18, 0x0a,
+     548,   18,   19,   18, 0x0a,
+     567,   18,   19,   18, 0x0a,
+     588,   18,   19,   18, 0x0a,
+     610,   18,   19,   18, 0x0a,
+     634,   18,   19,   18, 0x0a,
+     649,   18,   19,   18, 0x0a,
+     666,   18,   19,   18, 0x0a,
+     686,   18,   19,   18, 0x0a,
+     708,   18,   19,   18, 0x0a,
+     720,   18,   19,   18, 0x0a,
 
        0        // eod
 };
@@ -61,7 +81,17 @@ static const char qt_meta_stringdata_DATPlayListFilter[] = {
     "on_dateEdit_2_changed()\0"
     "on_btn_change_pw_clicked()\0"
     "on_btn_change_cancel_clicked()\0"
-    "on_btn_change_clicked()\0"
+    "on_btn_change_clicked()\0project_select()\0"
+    "project_deselect()\0feature_select()\0"
+    "feature_deselect()\0vin_select()\0"
+    "vin_deselect()\0day_type_select()\0"
+    "day_type_deselect()\0weather_type_select()\0"
+    "weather_type_deselect()\0road_type_select()\0"
+    "road_type_deselect()\0event_status_select()\0"
+    "event_status_deselect()\0event_select()\0"
+    "event_deselect()\0annotation_select()\0"
+    "annotation_deselect()\0ai_select()\0"
+    "ai_deselect()\0"
 };
 
 const QMetaObject DATPlayListFilter::staticMetaObject = {
@@ -121,9 +151,49 @@ int DATPlayListFilter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
             if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
         case 12: { tResult _r = on_btn_change_clicked();
             if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 13: { tResult _r = project_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 14: { tResult _r = project_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 15: { tResult _r = feature_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 16: { tResult _r = feature_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 17: { tResult _r = vin_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 18: { tResult _r = vin_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 19: { tResult _r = day_type_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 20: { tResult _r = day_type_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 21: { tResult _r = weather_type_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 22: { tResult _r = weather_type_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 23: { tResult _r = road_type_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 24: { tResult _r = road_type_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 25: { tResult _r = event_status_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 26: { tResult _r = event_status_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 27: { tResult _r = event_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 28: { tResult _r = event_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 29: { tResult _r = annotation_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 30: { tResult _r = annotation_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 31: { tResult _r = ai_select();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
+        case 32: { tResult _r = ai_deselect();
+            if (_a[0]) *reinterpret_cast< tResult*>(_a[0]) = _r; }  break;
         default: ;
         }
-        _id -= 13;
+        _id -= 33;
     }
     return _id;
 }
