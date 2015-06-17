@@ -59,6 +59,21 @@ vector<string> ListHandle::getSelectedItemTextList(QListView* source, int idx)
 	return fids;
 }
 
+vector<string> ListHandle::getSelectedItemTextList(QListView* source)
+{
+	vector<string> fids;
+
+	for (int i = 0 ; i < source->model()->rowCount() ; i++)
+	{
+		string temp = source->model()->index(i,0).data(Qt::DisplayRole).toString().toStdString();
+		if(temp!=""){
+			fids.push_back(temp);
+		}
+	}
+	return fids;
+}
+
+
 vector<string> ListHandle::getSelectedItemTextList(QListView* source, QStandardItemModel* sourceModel)
 {
 	vector<string> selectedItem;

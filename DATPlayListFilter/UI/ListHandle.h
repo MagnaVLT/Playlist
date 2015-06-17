@@ -26,6 +26,7 @@ public:
 	vector<string> getConcatenatedText(map<string, vector<string>> dataContainer, vector<string> itemsFromDB);
 	vector<string> getSelectedItemTextList(QListView* source, int idx);
 	vector<string> getSelectedItemTextList(QListView* source, QStandardItemModel* sourceModel);
+	vector<string> getSelectedItemTextList(QListView* source);
 	string getSelectedItemText(QModelIndex index);
 	string getSelectedItemText(QModelIndex index, int idx);
 	QModelIndex getSelectedItemIndex(QListView* source, string text);

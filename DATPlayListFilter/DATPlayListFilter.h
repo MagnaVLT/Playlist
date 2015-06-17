@@ -138,7 +138,9 @@ private:
 	vector<string> weathers;
 	vector<string> roads;
 	vector<string> event_statuses;
+	bool is_all_date;
 	
+
 
 	ListHandle* listhandle;
 	QStandardItemModel* project_model;
@@ -190,6 +192,8 @@ private:
 
 	void refeash_level_2();
 	void refreash_event();
+	bool is_level0_not_full();
+	bool is_level1_not_full();
 	void refreash_annotation();
 	void refreash_additional_information();
 

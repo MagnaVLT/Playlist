@@ -163,6 +163,10 @@ void DATPlayListFilter::init_level2()
 	this->m_oFilterGUI.list_annotation->setModel(this->annotation_model);
 	this->m_oFilterGUI.list_selected_annotation->setModel(this->selected_annotation_model);
 
+	additional_information_model = new QStandardItemModel();
+	selected_additional_information_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_ai->setModel(this->additional_information_model);
+	this->m_oFilterGUI.list_selected_ai->setModel(this->selected_additional_information_model);
 
 }
 
@@ -206,30 +210,85 @@ void DATPlayListFilter::init_project_list()
 
 void DATPlayListFilter::refeash_level_1()
 {
-	this->refreash_vin();
+	this->set_data();
 	this->refreash_feature();
+	this->refreash_vin();
 }
 
 void DATPlayListFilter::refreash_feature()
 {
-	this->refreash_vin();
+	this->selected_feature_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_selected_feature->setModel(this->selected_feature_model);
+	if(this->projects.empty())
+	{
+		feature_model = new QStandardItemModel();
+		this->m_oFilterGUI.list_feature->setModel(this->feature_model);
+		
+	}else{
+		string query =	queries->get_feature_list(this->projects, DATPlayListFilter::ID);
+		feature_model = new QStandardItemModel();
+		this->listhandle->addItemsFromDB(m_oFilterGUI.list_feature, feature_model, queries->get_fields_name_id(), query);
+	}
 }
 
 void DATPlayListFilter::refreash_vin()
 {
+	this->selected_vin_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_selected_vin->setModel(this->selected_vin_model);
+	if(this->is_level0_not_full())
+	{
+		vin_model = new QStandardItemModel();
+		this->m_oFilterGUI.list_vin->setModel(this->vin_model);
+	}else{
+		vector<vector<string>> conditions;
+		conditions.push_back(this->projects);
+		if(this->features.empty()!= false) conditions.push_back(this->features);
+		string query =	queries->get_vin_list(conditions, this->is_all_date, this->date_ranges, this->event_categories);
+		vin_model = new QStandardItemModel();
+		this->listhandle->addItemsFromDB(m_oFilterGUI.list_vin, vin_model, queries->get_fields_vin(), query);
+	}
 }
 
 void DATPlayListFilter::refeash_level_2()
 {
+	this->set_data();
 	this->refreash_event();
 	this->refreash_annotation();
 	this->refreash_additional_information();
-
 }
 
 void DATPlayListFilter::refreash_event()
 {
+	this->selected_event_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_selected_event->setModel(this->selected_event_model);
+	
+	LOG_INFO("test");
+	if(this->is_level0_not_full() || this->is_level1_not_full())
+	{
+		event_model = new QStandardItemModel();
+		this->m_oFilterGUI.list_event->setModel(this->event_model);
+	}else{
+		vector<vector<string>> conditions;
+		conditions.push_back(this->projects);
+		conditions.push_back(this->features);
+		conditions.push_back(this->vins);
+		conditions.push_back(this->event_categories);
+		conditions.push_back(this->date_ranges);
+		string query =	queries->get_event_list(conditions, queries->get_condition_for_event(), this->is_all_date);
+		LOG_INFO(query.c_str());
+		event_model = new QStandardItemModel();
+		this->listhandle->addItemsFromDB(m_oFilterGUI.list_event, event_model, queries->get_fields_name_id(), query);
+	}
+}
 
+bool DATPlayListFilter::is_level0_not_full()
+{
+	return this->projects.empty() || this->event_categories.size()==0 || (this->date_ranges.size()==0 && this->is_all_date==false);
+}
+
+bool DATPlayListFilter::is_level1_not_full()
+{
+	return (this->projects.empty() || this->features.empty() || this->vins.empty());
 }
 
 void DATPlayListFilter::refreash_annotation()
@@ -282,12 +341,16 @@ void DATPlayListFilter::refreash_clip_list(){
 
 void DATPlayListFilter::set_data()
 {
+	if(this->m_oFilterGUI.chk_date->isChecked()==true) this->is_all_date = true;
+	else is_all_date = false;
 
+	event_categories.clear();
 	if(this->m_oFilterGUI.chk_fcm_event->isChecked()==true) event_categories.push_back("1");
 	if(this->m_oFilterGUI.chk_eyeq_event->isChecked()==true) event_categories.push_back("2");
 	if(this->m_oFilterGUI.chk_user_event->isChecked()==true) event_categories.push_back("3");
 	if(this->m_oFilterGUI.chk_radar->isChecked()==true) event_categories.push_back("4");
 
+	date_ranges.clear();
 	if(!this->m_oFilterGUI.chk_date->isChecked())
 	{
 		date_ranges.push_back(this->get_date(this->m_oFilterGUI.dateEdit, "-"));
@@ -296,17 +359,14 @@ void DATPlayListFilter::set_data()
 
 	projects = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_project, 1);
 	features = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_feature, 1);
-	vins = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_vin, 1);
-
+	vins = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_vin);
 	events = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_event, 1);
 	annotations = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_annotation, 1);
 	additional_informations = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_ai, 1);
-
 	days = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_day, 1);
 	weathers = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_weather, 1);
 	roads = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_road, 1);
 	event_statuses = this->listhandle->getSelectedItemTextList(this->m_oFilterGUI.list_selected_event_status, 1);
-
 }
 
 
@@ -324,32 +384,47 @@ void DATPlayListFilter::register_signal_slot_for_log_in()
 }
 
 tResult DATPlayListFilter::on_chk_date_clicked()
-{
-
+{	
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
 	RETURN_NOERROR;
 }
 
 tResult DATPlayListFilter::on_chk_eyeq_event_clicked()
 {
-
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
 	RETURN_NOERROR;
 }
 
 tResult DATPlayListFilter::on_chk_fcm_event_clicked()
 {
-
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
 	RETURN_NOERROR;
 }
 
 tResult DATPlayListFilter::on_chk_user_event_clicked()
 {
-
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
 	RETURN_NOERROR;
 }
 
 tResult DATPlayListFilter::on_chk_radar_event_clicked()
 {
-
+	this->refeash_level_1();
+	this->refeash_level_2();
+	this->refeash_level_3();
+	this->refeash_level_4();
 	RETURN_NOERROR;
 }
 
@@ -398,7 +473,8 @@ tResult DATPlayListFilter::feature_select()
 {
 	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_feature, this->feature_model, m_oFilterGUI.list_selected_feature, this->selected_feature_model);
 	this->set_data();
-	this->refeash_level_1();
+
+	this->refreash_vin();
 	this->refeash_level_2();
 	this->refeash_level_3();
 	this->refeash_level_4();
@@ -410,6 +486,8 @@ tResult DATPlayListFilter::feature_deselect()
 {
 	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_feature, this->selected_feature_model, m_oFilterGUI.list_feature, this->feature_model);
 	this->set_data();
+
+	this->refreash_vin();
 	this->refeash_level_1();
 	this->refeash_level_2();
 	this->refeash_level_3();
@@ -417,10 +495,11 @@ tResult DATPlayListFilter::feature_deselect()
 
 	RETURN_NOERROR;
 }
+
 tResult DATPlayListFilter::vin_select()
 {
 	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_vin, this->vin_model, m_oFilterGUI.list_selected_vin, this->selected_vin_model);
-	this->refeash_level_1();
+	
 	this->refeash_level_2();
 	this->refeash_level_3();
 	this->refeash_level_4();
@@ -430,13 +509,61 @@ tResult DATPlayListFilter::vin_select()
 tResult DATPlayListFilter::vin_deselect()
 {
 	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_vin, this->selected_vin_model, m_oFilterGUI.list_vin, this->vin_model);
-	this->refeash_level_1();
+	
 	this->refeash_level_2();
 	this->refeash_level_3();
 	this->refeash_level_4();
 	RETURN_NOERROR;
 }
 
+
+tResult DATPlayListFilter::event_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_event, this->event_model, m_oFilterGUI.list_selected_event, this->selected_event_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::event_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_event, this->selected_event_model, m_oFilterGUI.list_event, this->event_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::annotation_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_annotation, this->annotation_model, m_oFilterGUI.list_selected_annotation, this->selected_annotation_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::annotation_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_annotation, this->selected_annotation_model, m_oFilterGUI.list_annotation, this->annotation_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::ai_select()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_ai, this->additional_information_model, m_oFilterGUI.list_selected_ai, this->selected_additional_information_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
+
+tResult DATPlayListFilter::ai_deselect()
+{
+	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_ai, this->selected_additional_information_model, m_oFilterGUI.list_ai, this->additional_information_model);
+	this->refeash_level_3();
+	this->refeash_level_4();
+	RETURN_NOERROR;
+}
 
 tResult DATPlayListFilter::day_type_select()
 {
@@ -494,53 +621,6 @@ tResult DATPlayListFilter::event_status_deselect()
 	RETURN_NOERROR;
 }
 
-tResult DATPlayListFilter::event_select()
-{
-	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_event, this->event_model, m_oFilterGUI.list_selected_event, this->selected_event_model);
-	this->refeash_level_3();
-	this->refeash_level_4();
-	RETURN_NOERROR;
-}
-
-tResult DATPlayListFilter::event_deselect()
-{
-	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_event, this->selected_event_model, m_oFilterGUI.list_event, this->event_model);
-	this->refeash_level_3();
-	this->refeash_level_4();
-	RETURN_NOERROR;
-}
-
-tResult DATPlayListFilter::annotation_select()
-{
-	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_annotation, this->annotation_model, m_oFilterGUI.list_selected_annotation, this->selected_annotation_model);
-	this->refeash_level_3();
-	this->refeash_level_4();
-	RETURN_NOERROR;
-}
-
-tResult DATPlayListFilter::annotation_deselect()
-{
-	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_annotation, this->selected_annotation_model, m_oFilterGUI.list_annotation, this->annotation_model);
-	this->refeash_level_3();
-	this->refeash_level_4();
-	RETURN_NOERROR;
-}
-
-tResult DATPlayListFilter::ai_select()
-{
-	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_ai, this->additional_information_model, m_oFilterGUI.list_selected_ai, this->selected_additional_information_model);
-	this->refeash_level_3();
-	this->refeash_level_4();
-	RETURN_NOERROR;
-}
-
-tResult DATPlayListFilter::ai_deselect()
-{
-	this->listhandle->moveSelectedItemWithDelete(m_oFilterGUI.list_selected_ai, this->selected_additional_information_model, m_oFilterGUI.list_ai, this->additional_information_model);
-	this->refeash_level_3();
-	this->refeash_level_4();
-	RETURN_NOERROR;
-}
 
 tResult DATPlayListFilter::on_dateEdit_2_changed()
 {

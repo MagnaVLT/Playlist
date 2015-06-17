@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DATPlayerUI.ui'
 **
-** Created: Tue Jun 16 03:25:06 2015
+** Created: Wed Jun 17 03:19:12 2015
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
