@@ -132,7 +132,8 @@ private:
 
 	vector<string> events;
 	vector<string> annotations;
-	vector<string> additional_informations;
+	vector<string> ai;
+	vector<string> ai_value;
 
 	vector<string> days;
 	vector<string> weathers;
@@ -167,13 +168,15 @@ private:
 	QStandardItemModel* annotation_model;
 	QStandardItemModel* selected_annotation_model;
 
-	QStandardItemModel* additional_information_model;
-	QStandardItemModel* selected_additional_information_model;
+	QStandardItemModel* ai_model;
+	QStandardItemModel* selected_ai_model;
+
+	QStandardItemModel* ai_value_model;
+	QStandardItemModel* selected_ai_value_model;
 
 	QStandardItemModel* event_status_model;
 	QStandardItemModel* selected_event_status_model;
 	QStandardItemModel* clip_list_model;
-
 
 	void register_signal_slot();
 	void register_signal_slot_for_log_in();
@@ -195,7 +198,8 @@ private:
 	bool is_level0_not_full();
 	bool is_level1_not_full();
 	void refreash_annotation();
-	void refreash_additional_information();
+	void refreash_ai_type();
+	void refreash_ai_value();
 
 	void refeash_level_3();
 	void refreash_day();

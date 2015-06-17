@@ -48,6 +48,36 @@ string Queries::get_event_list(vector<vector<string>> conditions, vector<string>
 	return query;
 }
 
+std::string Queries::get_annotation_list(vector<vector<string>> conditions, vector<string> condition_fields)
+{
+	string query = "select name, id from predefined_annotation_list ";
+
+	for(unsigned int i = 0 ; i < conditions.size(); i++)
+	{
+		query = this->addFieldsViaInStatement(condition_fields.at(i), conditions.at(i), query, i+1, false);
+	}
+
+	query += "order by projectid, featureid, id;";
+
+	return query;
+}
+
+string Queries::get_ai_list(vector<vector<string>> conditions, vector<string> condition_fields, bool is_all_date)
+{
+	string query = "select name, id from addtional_event_report ";
+
+	for(unsigned int i = 0 ; i < conditions.size()-1; i++)
+	{
+		if(condition_fields.at(i)=="b.vin") query = this->addFieldsViaInStatement(condition_fields.at(i), conditions.at(i), query, 2, true);
+		else query = this->addFieldsViaInStatement(condition_fields.at(i), conditions.at(i), query, 2, false);
+	}
+
+	if(is_all_date==false) query += " and date(b.localpctime) >= '" + (conditions.at(conditions.size()-1)).at(0) + "' and date(b.localpctime) <= '" + (conditions.at(conditions.size()-1)).at(1) + "' ";
+	query += "group by a.id order by a.id;";
+
+	return query;
+}
+
 std::string Queries::get_vin_list(vector<vector<string>> conditions, bool is_all_date, vector<string>date_rages, vector<string> event_categories)
 {
 	string query =  "select a.vin as vin from event_report a, event_list b ";
@@ -151,5 +181,21 @@ vector<string> Queries::get_condition_for_event()
 	field.push_back("a.featureid");
 	field.push_back("b.vin");
 	field.push_back("b.eventcategoryid");
+	return field;
+}
+
+vector<string> Queries::get_condition_for_annotation()
+{
+	vector<string> field;
+	field.push_back("projectid");
+	field.push_back("featureid");
+	return field;
+}
+
+vector<string> Queries::get_condition_for_ai()
+{
+	vector<string> field;
+	field.push_back("projectid");
+	field.push_back("featureid");
 	return field;
 }

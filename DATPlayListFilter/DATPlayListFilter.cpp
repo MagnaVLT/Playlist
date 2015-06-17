@@ -254,7 +254,7 @@ void DATPlayListFilter::refeash_level_2()
 	this->set_data();
 	this->refreash_event();
 	this->refreash_annotation();
-	this->refreash_additional_information();
+	this->refreash_additional_information_type();
 }
 
 void DATPlayListFilter::refreash_event()
@@ -262,7 +262,6 @@ void DATPlayListFilter::refreash_event()
 	this->selected_event_model = new QStandardItemModel();
 	this->m_oFilterGUI.list_selected_event->setModel(this->selected_event_model);
 	
-	LOG_INFO("test");
 	if(this->is_level0_not_full() || this->is_level1_not_full())
 	{
 		event_model = new QStandardItemModel();
@@ -275,7 +274,6 @@ void DATPlayListFilter::refreash_event()
 		conditions.push_back(this->event_categories);
 		conditions.push_back(this->date_ranges);
 		string query =	queries->get_event_list(conditions, queries->get_condition_for_event(), this->is_all_date);
-		LOG_INFO(query.c_str());
 		event_model = new QStandardItemModel();
 		this->listhandle->addItemsFromDB(m_oFilterGUI.list_event, event_model, queries->get_fields_name_id(), query);
 	}
@@ -293,12 +291,50 @@ bool DATPlayListFilter::is_level1_not_full()
 
 void DATPlayListFilter::refreash_annotation()
 {
+	this->selected_annotation_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_selected_annotation->setModel(this->selected_annotation_model);
 
+	if(this->is_level0_not_full() || this->is_level1_not_full())
+	{
+		annotation_model = new QStandardItemModel();
+		this->m_oFilterGUI.list_annotation->setModel(this->annotation_model);
+	}else{
+		vector<vector<string>> conditions;
+		conditions.push_back(this->projects);
+		conditions.push_back(this->features);
+		
+		string query =	queries->get_annotation_list(conditions, queries->get_condition_for_annotation());
+		annotation_model = new QStandardItemModel();
+		this->listhandle->addItemsFromDB(m_oFilterGUI.list_annotation, annotation_model, queries->get_fields_name_id(), query);
+	}
 }
 
-void DATPlayListFilter::refreash_additional_information()
+void DATPlayListFilter::refreash_additional_information_type()
 {
+	this->selected_additional_information_model = new QStandardItemModel();
+	this->m_oFilterGUI.list_selected_ai->setModel(this->selected_additional_information_model);
 
+	if(this->is_level0_not_full() || this->is_level1_not_full())
+	{
+		additional_information_model = new QStandardItemModel();
+		this->m_oFilterGUI.list_ai->setModel(this->additional_information_model);
+	}else{
+		vector<vector<string>> conditions;
+		conditions.push_back(this->projects);
+		conditions.push_back(this->features);
+		conditions.push_back(this->vins);
+		conditions.push_back(this->event_categories);
+		conditions.push_back(this->date_ranges);
+
+		/*string query =	queries->get_ai_list(conditions, queries->get_condition_for_ai(), this->is_all_date);
+		additional_information_model = new QStandardItemModel();
+		this->listhandle->addItemsFromDB(m_oFilterGUI.list_ai, additional_information_model, queries->get_fields_name_id(), query);*/
+	}
+}
+
+void DATPlayListFilter::refreash_additional_information_value()
+{
+	
 }
 
 void DATPlayListFilter::refeash_level_3()

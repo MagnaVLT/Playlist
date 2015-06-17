@@ -242,9 +242,9 @@
      <property name="geometry">
       <rect>
        <x>842</x>
-       <y>45</y>
+       <y>40</y>
        <width>151</width>
-       <height>121</height>
+       <height>61</height>
       </rect>
      </property>
      <property name="selectionMode">
@@ -255,7 +255,7 @@
      <property name="geometry">
       <rect>
        <x>1000</x>
-       <y>80</y>
+       <y>50</y>
        <width>31</width>
        <height>23</height>
       </rect>
@@ -268,9 +268,9 @@
      <property name="geometry">
       <rect>
        <x>1040</x>
-       <y>44</y>
+       <y>39</y>
        <width>151</width>
-       <height>121</height>
+       <height>61</height>
       </rect>
      </property>
      <property name="selectionMode">
@@ -281,7 +281,7 @@
      <property name="geometry">
       <rect>
        <x>1000</x>
-       <y>110</y>
+       <y>75</y>
        <width>31</width>
        <height>23</height>
       </rect>
@@ -304,6 +304,58 @@
      </property>
      <property name="text">
       <string>Additional Information</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_d_ai_2">
+     <property name="geometry">
+      <rect>
+       <x>1000</x>
+       <y>140</y>
+       <width>31</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;&lt;</string>
+     </property>
+    </widget>
+    <widget class="QListView" name="list_selected_ai_2">
+     <property name="geometry">
+      <rect>
+       <x>1040</x>
+       <y>104</y>
+       <width>151</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
+     </property>
+    </widget>
+    <widget class="QListView" name="list_ai_2">
+     <property name="geometry">
+      <rect>
+       <x>842</x>
+       <y>105</y>
+       <width>151</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_s_ai_2">
+     <property name="geometry">
+      <rect>
+       <x>1000</x>
+       <y>115</y>
+       <width>31</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt;&gt;</string>
      </property>
     </widget>
    </widget>
@@ -1047,36 +1099,6 @@
       <string>&gt;&gt;</string>
      </property>
     </widget>
-    <zorder>label_4</zorder>
-    <zorder>list_event</zorder>
-    <zorder>btn_d_event</zorder>
-    <zorder>list_selected_event</zorder>
-    <zorder>btn_s_event</zorder>
-    <zorder>label_3</zorder>
-    <zorder>btn_d_roadtype</zorder>
-    <zorder>list_road</zorder>
-    <zorder>list_weather</zorder>
-    <zorder>btn_d_daytype</zorder>
-    <zorder>btn_s_roadtype</zorder>
-    <zorder>label_15</zorder>
-    <zorder>list_selected_day</zorder>
-    <zorder>btn_s_daytype</zorder>
-    <zorder>label_17</zorder>
-    <zorder>label_12</zorder>
-    <zorder>btn_s_weathertype</zorder>
-    <zorder>label_16</zorder>
-    <zorder>list_day</zorder>
-    <zorder>list_selected_road</zorder>
-    <zorder>label_18</zorder>
-    <zorder>label_14</zorder>
-    <zorder>list_selected_weather</zorder>
-    <zorder>btn_d_weathertype</zorder>
-    <zorder>label_9</zorder>
-    <zorder>label_10</zorder>
-    <zorder>list_event_status</zorder>
-    <zorder>btn_d_event_status</zorder>
-    <zorder>list_selected_event_status</zorder>
-    <zorder>btn_s_event_status</zorder>
    </widget>
   </widget>
   <widget class="QGroupBox" name="grp4">
