@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DATPlayerUI.ui'
 **
-** Created: Wed Jun 17 06:41:12 2015
+** Created: Wed Jun 17 22:39:11 2015
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -51,11 +51,11 @@ public:
     QPushButton *btn_s_ai;
     QListView *list_selected_ai;
     QPushButton *btn_d_ai;
-    QLabel *label_13;
     QPushButton *btn_d_ai_2;
     QListView *list_selected_ai_2;
     QListView *list_ai_2;
     QPushButton *btn_s_ai_2;
+    QCheckBox *chk_ai;
     QGroupBox *grp1;
     QLabel *label_25;
     QListView *list_project;
@@ -114,6 +114,8 @@ public:
     QPushButton *btn_make;
     QListView *list_clip_list;
     QLabel *lbl_clip;
+    QLineEdit *txt_clip_directory;
+    QPushButton *btn_clip;
     QGroupBox *grp_pwchange;
     QLineEdit *txt_change_id;
     QLineEdit *txt_cur_pw;
@@ -147,10 +149,12 @@ public:
         grp3->setGeometry(QRect(10, 240, 1211, 171));
         list_annotation = new QListView(grp3);
         list_annotation->setObjectName(QString::fromUtf8("list_annotation"));
+        list_annotation->setEnabled(false);
         list_annotation->setGeometry(QRect(430, 45, 170, 121));
         list_annotation->setSelectionMode(QAbstractItemView::MultiSelection);
         list_selected_annotation = new QListView(grp3);
         list_selected_annotation->setObjectName(QString::fromUtf8("list_selected_annotation"));
+        list_selected_annotation->setEnabled(false);
         list_selected_annotation->setGeometry(QRect(650, 45, 170, 121));
         list_selected_annotation->setSelectionMode(QAbstractItemView::MultiSelection);
         label_3 = new QLabel(grp3);
@@ -167,12 +171,14 @@ public:
         list_selected_event->setSelectionMode(QAbstractItemView::MultiSelection);
         btn_d_annotation = new QPushButton(grp3);
         btn_d_annotation->setObjectName(QString::fromUtf8("btn_d_annotation"));
+        btn_d_annotation->setEnabled(false);
         btn_d_annotation->setGeometry(QRect(610, 105, 31, 23));
         label_6 = new QLabel(grp3);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(670, 20, 161, 20));
+        label_6->setGeometry(QRect(661, 21, 161, 20));
         btn_s_annotation = new QPushButton(grp3);
         btn_s_annotation->setObjectName(QString::fromUtf8("btn_s_annotation"));
+        btn_s_annotation->setEnabled(false);
         btn_s_annotation->setGeometry(QRect(610, 75, 31, 23));
         btn_s_event = new QPushButton(grp3);
         btn_s_event->setObjectName(QString::fromUtf8("btn_s_event"));
@@ -192,42 +198,51 @@ public:
         chk_search->setChecked(true);
         txt_search = new QLineEdit(grp3);
         txt_search->setObjectName(QString::fromUtf8("txt_search"));
-        txt_search->setGeometry(QRect(499, 19, 321, 20));
+        txt_search->setGeometry(QRect(500, 20, 321, 20));
         label_5 = new QLabel(grp3);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(1040, 20, 151, 16));
         list_ai = new QListView(grp3);
         list_ai->setObjectName(QString::fromUtf8("list_ai"));
+        list_ai->setEnabled(false);
         list_ai->setGeometry(QRect(842, 40, 151, 61));
         list_ai->setSelectionMode(QAbstractItemView::MultiSelection);
         btn_s_ai = new QPushButton(grp3);
         btn_s_ai->setObjectName(QString::fromUtf8("btn_s_ai"));
+        btn_s_ai->setEnabled(false);
         btn_s_ai->setGeometry(QRect(1000, 50, 31, 23));
         list_selected_ai = new QListView(grp3);
         list_selected_ai->setObjectName(QString::fromUtf8("list_selected_ai"));
+        list_selected_ai->setEnabled(false);
         list_selected_ai->setGeometry(QRect(1040, 39, 151, 61));
         list_selected_ai->setSelectionMode(QAbstractItemView::MultiSelection);
         btn_d_ai = new QPushButton(grp3);
         btn_d_ai->setObjectName(QString::fromUtf8("btn_d_ai"));
+        btn_d_ai->setEnabled(false);
         btn_d_ai->setGeometry(QRect(1000, 75, 31, 23));
-        label_13 = new QLabel(grp3);
-        label_13->setObjectName(QString::fromUtf8("label_13"));
-        label_13->setGeometry(QRect(860, 21, 111, 16));
-        label_13->setLayoutDirection(Qt::LeftToRight);
         btn_d_ai_2 = new QPushButton(grp3);
         btn_d_ai_2->setObjectName(QString::fromUtf8("btn_d_ai_2"));
+        btn_d_ai_2->setEnabled(false);
         btn_d_ai_2->setGeometry(QRect(1000, 140, 31, 23));
         list_selected_ai_2 = new QListView(grp3);
         list_selected_ai_2->setObjectName(QString::fromUtf8("list_selected_ai_2"));
+        list_selected_ai_2->setEnabled(false);
         list_selected_ai_2->setGeometry(QRect(1040, 104, 151, 61));
         list_selected_ai_2->setSelectionMode(QAbstractItemView::MultiSelection);
         list_ai_2 = new QListView(grp3);
         list_ai_2->setObjectName(QString::fromUtf8("list_ai_2"));
+        list_ai_2->setEnabled(false);
         list_ai_2->setGeometry(QRect(842, 105, 151, 61));
         list_ai_2->setSelectionMode(QAbstractItemView::MultiSelection);
         btn_s_ai_2 = new QPushButton(grp3);
         btn_s_ai_2->setObjectName(QString::fromUtf8("btn_s_ai_2"));
+        btn_s_ai_2->setEnabled(false);
         btn_s_ai_2->setGeometry(QRect(1000, 115, 31, 23));
+        chk_ai = new QCheckBox(grp3);
+        chk_ai->setObjectName(QString::fromUtf8("chk_ai"));
+        chk_ai->setEnabled(true);
+        chk_ai->setGeometry(QRect(854, 20, 141, 17));
+        chk_ai->setChecked(false);
         grp1 = new QGroupBox(grp0);
         grp1->setObjectName(QString::fromUtf8("grp1"));
         grp1->setGeometry(QRect(10, 70, 1211, 161));
@@ -419,20 +434,26 @@ public:
         btn_s_event_status->setGeometry(QRect(1000, 54, 31, 23));
         grp4 = new QGroupBox(Form);
         grp4->setObjectName(QString::fromUtf8("grp4"));
-        grp4->setGeometry(QRect(10, 570, 1251, 111));
+        grp4->setGeometry(QRect(10, 570, 1251, 141));
         btn_make = new QPushButton(grp4);
         btn_make->setObjectName(QString::fromUtf8("btn_make"));
-        btn_make->setGeometry(QRect(440, 10, 91, 91));
+        btn_make->setGeometry(QRect(520, 40, 91, 41));
         list_clip_list = new QListView(grp4);
         list_clip_list->setObjectName(QString::fromUtf8("list_clip_list"));
         list_clip_list->setEnabled(true);
-        list_clip_list->setGeometry(QRect(30, 10, 391, 91));
+        list_clip_list->setGeometry(QRect(30, 40, 481, 91));
         lbl_clip = new QLabel(grp4);
         lbl_clip->setObjectName(QString::fromUtf8("lbl_clip"));
         lbl_clip->setGeometry(QRect(540, 80, 381, 16));
+        txt_clip_directory = new QLineEdit(grp4);
+        txt_clip_directory->setObjectName(QString::fromUtf8("txt_clip_directory"));
+        txt_clip_directory->setGeometry(QRect(32, 10, 481, 21));
+        btn_clip = new QPushButton(grp4);
+        btn_clip->setObjectName(QString::fromUtf8("btn_clip"));
+        btn_clip->setGeometry(QRect(520, 10, 91, 21));
         grp_pwchange = new QGroupBox(Form);
         grp_pwchange->setObjectName(QString::fromUtf8("grp_pwchange"));
-        grp_pwchange->setGeometry(QRect(480, 350, 231, 181));
+        grp_pwchange->setGeometry(QRect(460, 430, 231, 181));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -529,7 +550,7 @@ public:
         label_26->setGeometry(QRect(21, 114, 61, 16));
         grp_login = new QGroupBox(Form);
         grp_login->setObjectName(QString::fromUtf8("grp_login"));
-        grp_login->setGeometry(QRect(480, 230, 231, 121));
+        grp_login->setGeometry(QRect(460, 310, 231, 121));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette1.setBrush(QPalette::Active, QPalette::Button, brush1);
@@ -654,9 +675,9 @@ public:
         label_5->setText(QApplication::translate("Form", "Selected Additional Information", 0, QApplication::UnicodeUTF8));
         btn_s_ai->setText(QApplication::translate("Form", ">>", 0, QApplication::UnicodeUTF8));
         btn_d_ai->setText(QApplication::translate("Form", "<<", 0, QApplication::UnicodeUTF8));
-        label_13->setText(QApplication::translate("Form", "Additional Information", 0, QApplication::UnicodeUTF8));
         btn_d_ai_2->setText(QApplication::translate("Form", "<<", 0, QApplication::UnicodeUTF8));
         btn_s_ai_2->setText(QApplication::translate("Form", ">>", 0, QApplication::UnicodeUTF8));
+        chk_ai->setText(QApplication::translate("Form", "Additional Information", 0, QApplication::UnicodeUTF8));
         grp1->setTitle(QString());
         label_25->setText(QApplication::translate("Form", "Project", 0, QApplication::UnicodeUTF8));
         btn_d_project->setText(QApplication::translate("Form", "<<", 0, QApplication::UnicodeUTF8));
@@ -701,6 +722,7 @@ public:
         btn_make->setText(QApplication::translate("Form", "Generate \n"
 " Play List", 0, QApplication::UnicodeUTF8));
         lbl_clip->setText(QString());
+        btn_clip->setText(QApplication::translate("Form", "Directory Setting", 0, QApplication::UnicodeUTF8));
         grp_pwchange->setTitle(QApplication::translate("Form", "PW Change", 0, QApplication::UnicodeUTF8));
         label_20->setText(QApplication::translate("Form", "ID", 0, QApplication::UnicodeUTF8));
         label_21->setText(QApplication::translate("Form", "Current PW", 0, QApplication::UnicodeUTF8));

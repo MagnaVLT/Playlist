@@ -39,6 +39,20 @@ public:
 		return s.str();
 	}
 
+	static void outToFile(string path, string prefix, vector<string> out_list)
+	{
+		ofstream myfile;
+		string file_name = path + MagnaUtil::longLongIntToString(MagnaUtil::getCurrentLocalTime()) + ".datpls";
+		myfile.open (file_name.c_str());
+
+		for each(string line in out_list)
+		{
+			line = prefix + line + "\n";
+			myfile << line;
+		}
+		
+		myfile.close();
+	}
 	static string boolToString(bool i) 
 	{
 		stringstream s;

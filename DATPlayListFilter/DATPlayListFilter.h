@@ -132,13 +132,17 @@ private:
 
 	vector<string> events;
 	vector<string> annotations;
-	vector<string> ai;
+	vector<string> ai_type;
 	vector<string> ai_value;
 
 	vector<string> days;
 	vector<string> weathers;
 	vector<string> roads;
 	vector<string> event_statuses;
+
+	vector<string> clip_list;
+	
+	string search_condition;
 	bool is_all_date;
 	
 
@@ -197,6 +201,8 @@ private:
 	void refreash_event();
 	bool is_level0_not_full();
 	bool is_level1_not_full();
+	bool is_level2_not_full();
+	bool is_level3_not_full();
 	void refreash_annotation();
 	void refreash_ai_type();
 	void refreash_ai_value();
@@ -211,6 +217,10 @@ private:
 	void refreash_clip_list();
 
 	void to_log_in_mode(bool mode);
+	void to_search_mode(bool mode);
+	void toAnnotationCategoryMode(bool mode);
+	void to_ai_mode(bool mode);
+	void to_date_mode(bool mode);
 	bool checkAuth(string id, string pass);
 	void init_project_list();
 
@@ -224,12 +234,17 @@ public slots:
 	tResult on_chk_fcm_event_clicked();
 	tResult on_chk_user_event_clicked();
 	tResult on_chk_radar_event_clicked();
+	tResult on_txt_search_edited(const QString &search_text);
 	tResult on_chk_annotation_clicked();
 	tResult on_chk_search_clicked();
+	tResult on_chk_ai_clicked();
 	tResult on_dateEdit_changed();
 	tResult on_dateEdit_2_changed();
+	tResult make();
+	void initWorkspaceDirectory();
 	tResult on_btn_change_pw_clicked();
 	tResult on_btn_change_cancel_clicked();
+	tResult on_btn_clip_clicked();
 	tResult on_btn_change_clicked();
 	tResult project_select();
 	tResult project_deselect();
@@ -238,6 +253,7 @@ public slots:
 	tResult vin_select();
 	tResult vin_deselect();
 
+	tResult ai_value_deselect();
 	tResult day_type_select();
 	tResult day_type_deselect();
 	tResult weather_type_select();
@@ -252,6 +268,7 @@ public slots:
 	tResult annotation_deselect();
 	tResult ai_select();
 	tResult ai_deselect();
+	tResult ai_value_select();
 };
 
 #endif
